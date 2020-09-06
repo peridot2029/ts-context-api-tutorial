@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-
+import { useTodosDispatch } from './../context/TodosContext';
 function TodoForm() {
   const [value, setValue] = useState('');
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useTodosDispatch();
+
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    dispatch({
+      type: 'CREATE',
+      text: value,
+    });
     setValue('');
   };
   return (
     <form onSubmit={onSubmit}>
       <input
-        value=''
+        value={value}
         placeholder='추가할 내용'
         onChange={e => setValue(e.target.value)}
       />
